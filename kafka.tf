@@ -1,16 +1,34 @@
-module "kafka_nodes_az1" {
-  source  = "./terraform-aws-ec2-instance"
+data "template_cloudinit_config" "kafka" {
+  # Main cloud-config configuration file.
+  part {
+    filename     = "init.cfg"
+    content_type = "text/cloud-config"
+    content      = templatefile("${path.module}/templates/init.tpl", {
+      volume_path = var.kafka_ebs_block_device[0].device_name
+      fs_path     = "/kafka"
+    })
+  }
 
-  name                        = "kafka_nodes_az1"
+  part {
+    content_type = "text/x-shellscript"
+    content      = var.kafka_additional_user_data
+  }
+}
+
+module "kafka_nodes_az1" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 2.0"
+
+  name                        = "${var.cluster_name}-kafka-az1"
   instance_count              = var.kafka_az1_count
-  ami                         = data.aws_ami.ami.id
+  ami                         = var.ami_id
   instance_type               = var.kafka_instance_type
   associate_public_ip_address = false
   subnet_id                   = var.az1_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.kafka_cluster.id], var.kafka_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
 
-  instance_initiated_shutdown_behavior = "terminate"
+  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.kafka_instance_profile
 
@@ -20,22 +38,23 @@ module "kafka_nodes_az1" {
 
   ebs_block_device = var.kafka_ebs_block_device
 
-  user_data = join("\n", list(var.kafka_user_data, var.kafka_user_data_extra))
+  user_data = data.template_cloudinit_config.kafka.rendered
 }
 
 module "kafka_nodes_az2" {
-  source  = "./terraform-aws-ec2-instance"
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 2.0"
 
-  name                        = "kafka_nodes_az2"
+  name                        = "${var.cluster_name}-kafka-az2"
   instance_count              = var.kafka_az2_count
-  ami                         = data.aws_ami.ami.id
+  ami                         = var.ami_id
   instance_type               = var.kafka_instance_type
   associate_public_ip_address = false
   subnet_id                   = var.az2_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.kafka_cluster.id], var.kafka_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
 
-  instance_initiated_shutdown_behavior = "terminate"
+  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.kafka_instance_profile
 
@@ -45,22 +64,23 @@ module "kafka_nodes_az2" {
 
   ebs_block_device = var.kafka_ebs_block_device
 
-  user_data = join("\n", list(var.kafka_user_data, var.kafka_user_data_extra))
+  user_data = data.template_cloudinit_config.kafka.rendered
 }
 
 module "kafka_nodes_az3" {
-  source  = "./terraform-aws-ec2-instance"
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 2.0"
 
-  name                        = "kafka_nodes_az3"
+  name                        = "${var.cluster_name}-kafka-az3"
   instance_count              = var.kafka_az3_count
-  ami                         = data.aws_ami.ami.id
+  ami                         = var.ami_id
   instance_type               = var.kafka_instance_type
   associate_public_ip_address = false
   subnet_id                   = var.az3_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.kafka_cluster.id], var.kafka_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
 
-  instance_initiated_shutdown_behavior = "terminate"
+  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.kafka_instance_profile
 
@@ -70,5 +90,5 @@ module "kafka_nodes_az3" {
 
   ebs_block_device = var.kafka_ebs_block_device
 
-  user_data = join("\n", list(var.kafka_user_data, var.kafka_user_data_extra))
+  user_data = data.template_cloudinit_config.kafka.rendered
 }
