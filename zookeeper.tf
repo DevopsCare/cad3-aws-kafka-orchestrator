@@ -19,7 +19,7 @@ module "zookeeper_nodes_az1" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 2.0"
 
-  name                        = "${var.cluster_name}-zookeeper-az1"
+  name                        = "${module.zookeeper_label.id}-az1"
   instance_count              = var.zookeeper_az1_count
   ami                         = var.ami_id
   instance_type               = var.zookeeper_instance_type
@@ -27,8 +27,6 @@ module "zookeeper_nodes_az1" {
   subnet_id                   = var.az1_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.zookeeper_cluster.id], var.zookeeper_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
-
-  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.zookeeper_instance_profile
 
@@ -45,7 +43,7 @@ module "zookeeper_nodes_az2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 2.0"
 
-  name                        = "${var.cluster_name}-zookeeper-az2"
+  name                        = "${module.zookeeper_label.id}-az2"
   instance_count              = var.zookeeper_az2_count
   ami                         = var.ami_id
   instance_type               = var.zookeeper_instance_type
@@ -53,8 +51,6 @@ module "zookeeper_nodes_az2" {
   subnet_id                   = var.az2_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.zookeeper_cluster.id], var.zookeeper_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
-
-  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.zookeeper_instance_profile
 
@@ -71,7 +67,7 @@ module "zookeeper_nodes_az3" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 2.0"
 
-  name                        = "${var.cluster_name}-zookeeper-az3"
+  name                        = "${module.zookeeper_label.id}-az3"
   instance_count              = var.zookeeper_az3_count
   ami                         = var.ami_id
   instance_type               = var.zookeeper_instance_type
@@ -79,8 +75,6 @@ module "zookeeper_nodes_az3" {
   subnet_id                   = var.az3_subnet_id
   vpc_security_group_ids      = concat([aws_security_group.zookeeper_cluster.id], var.zookeeper_additional_security_groups)
   key_name                    = var.ec2_key_pair_name
-
-  instance_initiated_shutdown_behavior = "stop"
 
   iam_instance_profile = var.zookeeper_instance_profile
 

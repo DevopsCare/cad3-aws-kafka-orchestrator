@@ -1,8 +1,6 @@
 # General
 
-variable "cluster_name" {}
-
-variable "label" {}
+#variable "label" {}
 
 variable "domain" {
   type    = string
@@ -50,7 +48,7 @@ variable "kafka_instance_type" {
 variable "kafka_root_block_device" {
   default = [{
       volume_type           = "gp2"
-      volume_size           = 20
+      volume_size           = 10
       delete_on_termination = true
     },]
 }
@@ -98,7 +96,7 @@ variable "zookeeper_instance_type" {
 variable "zookeeper_root_block_device" {
   default = [{
       volume_type           = "gp2"
-      volume_size           = 20
+      volume_size           = 10
       delete_on_termination = true
     },]
 }

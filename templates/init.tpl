@@ -10,7 +10,6 @@ mounts:
 
 runcmd:
   - amazon-linux-extras install epel
-  - yum install -y ec2-instance-connect
   - yum install -y python2-pip python3-pip python3-netaddr
   - pip3 install 'ansible<2.11'
   - yum install -y python3-urllib3 python-urllib3

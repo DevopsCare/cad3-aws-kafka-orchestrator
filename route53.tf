@@ -26,7 +26,6 @@ resource "aws_route53_record" "kafka_az3" {
 }
 
 resource "aws_route53_record" "kafka_round_robin" {
-  count   = 1
   zone_id = var.route53_zone_id
   name    = "kafka.${var.domain}"
   type    = "A"
@@ -66,7 +65,6 @@ resource "aws_route53_record" "zookeeper_az3" {
 }
 
 resource "aws_route53_record" "zookeeper_round_robin" {
-  count   = 1
   zone_id = var.route53_zone_id
   name    = "zookeeper.${var.domain}"
   type    = "A"

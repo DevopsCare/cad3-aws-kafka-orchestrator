@@ -27,7 +27,7 @@ output "kafka_instances" {
 }
 
 output "kafka_bootstrap_servers" {
-  value = aws_route53_record.kafka_round_robin[0].name
+  value = aws_route53_record.kafka_round_robin.name
 }
 
 output "zookeeper_instances" {
@@ -59,5 +59,5 @@ output "zookeeper_instances" {
 }
 
 output "zookeeper_bootstrap_servers" {
-  value = aws_route53_record.zookeeper_round_robin[0].name
+  value = aws_route53_record.zookeeper_round_robin.name
 }

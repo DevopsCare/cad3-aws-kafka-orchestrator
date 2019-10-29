@@ -1,6 +1,6 @@
 resource "aws_security_group" "kafka_cluster" {
-  name_prefix = "kafka_cluster_${var.cluster_name}"
-  description = "Kafka - ${var.cluster_name}"
+  name_prefix = module.kafka_label.id
+  description = "Kafka security group"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -19,8 +19,8 @@ resource "aws_security_group" "kafka_cluster" {
 }
 
 resource "aws_security_group" "zookeeper_cluster" {
-  name_prefix = "kafka_cluster_${var.cluster_name}"
-  description = "Zookeeper - ${var.cluster_name}"
+  name_prefix = module.zookeeper_label.id
+  description = "Zookeeper security group"
   vpc_id      = var.vpc_id
 
   ingress {
