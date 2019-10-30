@@ -1,6 +1,6 @@
 # General
 
-#variable "label" {}
+variable "label" {}
 
 variable "domain" {
   type    = string
