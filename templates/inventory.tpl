@@ -1,0 +1,15 @@
+[all]
+${list_kafka_nodes_az1}
+${list_kafka_nodes_az2}
+${list_kafka_nodes_az3}
+${list_zookeeper_nodes_az1}
+${list_zookeeper_nodes_az2}
+${list_zookeeper_nodes_az3}
+[kafka]
+${list_kafka_nodes_az1}
+${list_kafka_nodes_az2}
+${list_kafka_nodes_az3}
+[zookeeper]
+${list_zookeeper_nodes_az1}
+${list_zookeeper_nodes_az2}
+${list_zookeeper_nodes_az3}
