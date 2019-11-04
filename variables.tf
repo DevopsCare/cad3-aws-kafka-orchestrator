@@ -11,6 +11,10 @@ variable "ec2_key_pair_name" {
   default = ""
 }
 
+variable "ansible_inventory_file_location" {
+  default = ""
+}
+
 # Network
 variable "vpc_id" {
   type = string
