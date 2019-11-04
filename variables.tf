@@ -1,9 +1,10 @@
 # General
-
-variable "label" {}
+variable "label" {
+  description = "https://github.com/cloudposse/terraform-null-label compatible module"
+}
 
 variable "domain" {
-  type    = string
+  type = string
 }
 
 variable "ec2_key_pair_name" {
@@ -11,34 +12,32 @@ variable "ec2_key_pair_name" {
 }
 
 # Network
-
 variable "vpc_id" {
   type = string
 }
+
 variable "az1_subnet_id" {
   type = string
 }
 variable "az2_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 variable "az3_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 # AMI
-
 variable "ami_id" {
-  default = "ami-0b898040803850657"
+  default = "ami-0b898040803850657" # us-east-1:amzn2-ami-hvm-2.0.20190618-x86_64-gp2
 }
 
 # Kafka params
-
 variable "kafka_additional_user_data" {
   type    = string
   default = <<-EOF
-EOF
+  EOF
 }
 
 variable "kafka_instance_type" {
@@ -47,42 +46,41 @@ variable "kafka_instance_type" {
 
 variable "kafka_root_block_device" {
   default = [{
-      volume_type           = "gp2"
-      volume_size           = 10
-      delete_on_termination = true
-    },]
+    volume_type           = "gp2"
+    volume_size           = 10
+    delete_on_termination = true
+  }]
 }
 
 variable "kafka_ebs_block_device" {
   default = [{
-        device_name           = "/dev/xvdb"
-        volume_type           = "gp2"
-        volume_size           = 30
-        delete_on_termination = true
-    },]
+    device_name           = "/dev/xvdb"
+    volume_type           = "gp2"
+    volume_size           = 30
+    delete_on_termination = true
+  }]
 }
 
 variable "kafka_az1_count" {
   default = 1
 }
-
 variable "kafka_az2_count" {
   default = 0
 }
-
 variable "kafka_az3_count" {
   default = 0
 }
 
 variable "kafka_additional_security_groups" {
-  type    = list
+  type    = list(string)
   default = []
 }
 
-variable "kafka_instance_profile" {}
+variable "kafka_instance_profile" {
+  type = string
+}
 
 # Zookeeper params
-
 variable "zookeeper_additional_user_data" {
   type    = string
   default = <<-EOF
@@ -95,40 +93,41 @@ variable "zookeeper_instance_type" {
 
 variable "zookeeper_root_block_device" {
   default = [{
-      volume_type           = "gp2"
-      volume_size           = 10
-      delete_on_termination = true
-    },]
+    volume_type           = "gp2"
+    volume_size           = 10
+    delete_on_termination = true
+  }]
 }
 
 variable "zookeeper_ebs_block_device" {
   default = [{
-        device_name           = "/dev/xvdb"
-        volume_type           = "gp2"
-        volume_size           = 30
-        delete_on_termination = true
-    },]
+    device_name           = "/dev/xvdb"
+    volume_type           = "gp2"
+    volume_size           = 30
+    delete_on_termination = true
+  }]
 }
 
 variable "zookeeper_az1_count" {
   default = 1
 }
-
 variable "zookeeper_az2_count" {
   default = 0
 }
-
 variable "zookeeper_az3_count" {
   default = 0
 }
 
 variable "zookeeper_additional_security_groups" {
-  type    = list
+  type    = list(string)
   default = []
 }
 
-variable "zookeeper_instance_profile" {}
+variable "zookeeper_instance_profile" {
+  type = string
+}
 
 # Route53
-
-variable "route53_zone_id" {}
+variable "route53_zone_id" {
+  type = string
+}
