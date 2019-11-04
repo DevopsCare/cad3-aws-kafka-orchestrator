@@ -81,7 +81,8 @@ variable "kafka_additional_security_groups" {
 }
 
 variable "kafka_instance_profile" {
-  type = string
+  type    = string
+  default = ""
 }
 
 # Zookeeper params
@@ -128,7 +129,8 @@ variable "zookeeper_additional_security_groups" {
 }
 
 variable "zookeeper_instance_profile" {
-  type = string
+  type    = string
+  default = ""
 }
 
 # Route53
