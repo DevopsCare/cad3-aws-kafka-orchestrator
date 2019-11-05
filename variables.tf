@@ -30,7 +30,7 @@ variable "az3_subnet_id" {
 
 # AMI
 variable "ami_id" {
-  default = "ami-0b898040803850657" # us-east-1:amzn2-ami-hvm-2.0.20190618-x86_64-gp2
+  default = "ami-02eac2c0129f6376b" # us-east-1:centos7-1901_01
 }
 
 # Kafka params
