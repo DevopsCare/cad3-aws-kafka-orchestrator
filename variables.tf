@@ -45,7 +45,7 @@ variable "kafka_additional_user_data" {
 }
 
 variable "kafka_instance_type" {
-  default = "t2.xlarge"
+  default = "t3.xlarge"
 }
 
 variable "kafka_root_block_device" {
@@ -91,7 +91,7 @@ EOF
 }
 
 variable "zookeeper_instance_type" {
-  default = "t2.large"
+  default = "t3.large"
 }
 
 variable "zookeeper_root_block_device" {
