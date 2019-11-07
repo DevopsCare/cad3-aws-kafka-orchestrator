@@ -52,7 +52,6 @@ variable "kafka_root_block_device" {
   default = [{
     volume_type           = "gp2"
     volume_size           = 10
-    delete_on_termination = true
   }]
 }
 
@@ -61,7 +60,6 @@ variable "kafka_ebs_block_device" {
     device_name           = "/dev/xvdb"
     volume_type           = "gp2"
     volume_size           = 30
-    delete_on_termination = true
   }]
 }
 
