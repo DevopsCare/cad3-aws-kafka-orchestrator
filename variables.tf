@@ -57,7 +57,7 @@ variable "kafka_root_block_device" {
 
 variable "kafka_ebs_block_device" {
   default = [{
-    device_name           = "/dev/xvdb"
+    device_name           = "/dev/nvme1n1"
     volume_type           = "gp2"
     volume_size           = 30
   }]
@@ -104,7 +104,7 @@ variable "zookeeper_root_block_device" {
 
 variable "zookeeper_ebs_block_device" {
   default = [{
-    device_name           = "/dev/xvdb"
+    device_name           = "/dev/nvme1n1"
     volume_type           = "gp2"
     volume_size           = 30
     delete_on_termination = true
