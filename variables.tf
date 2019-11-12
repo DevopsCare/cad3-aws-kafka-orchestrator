@@ -57,10 +57,15 @@ variable "kafka_root_block_device" {
 
 variable "kafka_ebs_block_device" {
   default = [{
-    device_name           = "/dev/nvme1n1"
+    device_name           = "/dev/xvdb"
     volume_type           = "gp2"
     volume_size           = 30
   }]
+}
+
+variable "kafka_ebs_optimized_volume_path" {
+  type    = string
+  default = ""
 }
 
 variable "kafka_az1_count" {
@@ -104,11 +109,16 @@ variable "zookeeper_root_block_device" {
 
 variable "zookeeper_ebs_block_device" {
   default = [{
-    device_name           = "/dev/nvme1n1"
+    device_name           = "/dev/xvdb"
     volume_type           = "gp2"
     volume_size           = 30
     delete_on_termination = true
   }]
+}
+
+variable "zookeeper_ebs_optimized_volume_path" {
+  type    = string
+  default = ""
 }
 
 variable "zookeeper_az1_count" {
@@ -135,3 +145,4 @@ variable "zookeeper_instance_profile" {
 variable "route53_zone_id" {
   type = string
 }
+

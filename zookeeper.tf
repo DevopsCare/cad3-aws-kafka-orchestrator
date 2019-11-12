@@ -4,7 +4,7 @@ data "template_cloudinit_config" "zookeeper" {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
     content      = templatefile("${path.module}/templates/init.tpl", {
-      volume_path = var.zookeeper_ebs_block_device[0].device_name
+      volume_path = var.zookeeper_ebs_optimized_volume_path != "" ? var.zookeeper_ebs_optimized_volume_path : var.zookeeper_ebs_block_device[0].device_name
       fs_path     = "/zookeeper"
     })
   }
