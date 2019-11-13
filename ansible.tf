@@ -2,11 +2,9 @@ locals {
   inventory_enabled = length(var.ansible_inventory_file_location) > 0 ?  1 : 0
 }
 
-resource "null_resource" "regenerate_inventory" {}
-
-data "template_file" "inventory" {
-  template = file("${path.module}/templates/inventory.tpl")
-  vars = {
+resource "local_file" "inventory" {
+  count = local.inventory_enabled
+  content  = templatefile("${path.module}/templates/inventory.tpl", {
     list_kafka_nodes_az1 = join(
       "\n",
       formatlist(
@@ -58,13 +56,6 @@ data "template_file" "inventory" {
         module.zookeeper_nodes_az3.id,
       ),
     )
-  }
-
-  depends_on = [null_resource.regenerate_inventory]
-}
-
-resource "local_file" "inventory" {
-  count = local.inventory_enabled
-  content  = data.template_file.inventory.rendered
+  })
   filename = var.ansible_inventory_file_location
 }
