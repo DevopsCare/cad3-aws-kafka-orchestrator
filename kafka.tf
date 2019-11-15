@@ -4,7 +4,7 @@ data "template_cloudinit_config" "kafka" {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
     content      = templatefile("${path.module}/templates/init.tpl", {
-      volume_path = var.kafka_ebs_optimized_volume_path != "" ? var.kafka_ebs_optimized_volume_path : var.kafka_ebs_block_device[0].device_name
+      volume_path = var.kafka_ebs_optimized ? var.kafka_ebs_optimized_volume_path : var.kafka_ebs_block_device[0].device_name
       fs_path     = "/kafka"
     })
   }
@@ -34,9 +34,23 @@ module "kafka_nodes_az1" {
   iam_instance_profile = var.kafka_instance_profile
   user_data            = data.template_cloudinit_config.kafka.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.kafka_ebs_optimized
   root_block_device = var.kafka_root_block_device
-  ebs_block_device  = var.kafka_ebs_block_device
+}
+
+resource "aws_ebs_volume" "kafka_nodes_az1" {
+  count             = var.kafka_az1_count
+  availability_zone = data.aws_subnet.az1[0].availability_zone
+  size              = var.kafka_ebs_block_device[0].volume_size
+  type              = var.kafka_ebs_block_device[0].volume_type
+  tags              = module.kafka_label.tags
+}
+
+resource "aws_volume_attachment" "kafka_nodes_az1" {
+  count       = var.kafka_az1_count
+  device_name = var.kafka_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.kafka_nodes_az1[count.index].id
+  instance_id = module.kafka_nodes_az1.id[count.index]
 }
 
 module "kafka_nodes_az2" {
@@ -58,9 +72,23 @@ module "kafka_nodes_az2" {
   iam_instance_profile = var.kafka_instance_profile
   user_data            = data.template_cloudinit_config.kafka.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.kafka_ebs_optimized
   root_block_device = var.kafka_root_block_device
-  ebs_block_device  = var.kafka_ebs_block_device
+}
+
+resource "aws_ebs_volume" "kafka_nodes_az2" {
+  count             = var.kafka_az2_count
+  availability_zone = data.aws_subnet.az2[0].availability_zone
+  size              = var.kafka_ebs_block_device[0].volume_size
+  type              = var.kafka_ebs_block_device[0].volume_type
+  tags              = module.kafka_label.tags
+}
+
+resource "aws_volume_attachment" "kafka_nodes_az2" {
+  count       = var.kafka_az2_count
+  device_name = var.kafka_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.kafka_nodes_az2[count.index].id
+  instance_id = module.kafka_nodes_az2.id[count.index]
 }
 
 module "kafka_nodes_az3" {
@@ -82,7 +110,21 @@ module "kafka_nodes_az3" {
   iam_instance_profile = var.kafka_instance_profile
   user_data            = data.template_cloudinit_config.kafka.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.kafka_ebs_optimized
   root_block_device = var.kafka_root_block_device
-  ebs_block_device  = var.kafka_ebs_block_device
+}
+
+resource "aws_ebs_volume" "kafka_nodes_az3" {
+  count             = var.kafka_az3_count
+  availability_zone = data.aws_subnet.az3[0].availability_zone
+  size              = var.kafka_ebs_block_device[0].volume_size
+  type              = var.kafka_ebs_block_device[0].volume_type
+  tags              = module.kafka_label.tags
+}
+
+resource "aws_volume_attachment" "kafka_nodes_az3" {
+  count       = var.kafka_az3_count
+  device_name = var.kafka_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.kafka_nodes_az3[count.index].id
+  instance_id = module.kafka_nodes_az3.id[count.index]
 }

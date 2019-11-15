@@ -4,7 +4,7 @@ data "template_cloudinit_config" "zookeeper" {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
     content      = templatefile("${path.module}/templates/init.tpl", {
-      volume_path = var.zookeeper_ebs_optimized_volume_path != "" ? var.zookeeper_ebs_optimized_volume_path : var.zookeeper_ebs_block_device[0].device_name
+      volume_path = var.zookeeper_ebs_optimized ? var.zookeeper_ebs_optimized_volume_path : var.zookeeper_ebs_block_device[0].device_name
       fs_path     = "/zookeeper"
     })
   }
@@ -34,9 +34,23 @@ module "zookeeper_nodes_az1" {
   iam_instance_profile = var.zookeeper_instance_profile
   user_data            = data.template_cloudinit_config.zookeeper.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.zookeeper_ebs_optimized
   root_block_device = var.zookeeper_root_block_device
-  ebs_block_device  = var.zookeeper_ebs_block_device
+}
+
+resource "aws_ebs_volume" "zookeeper_nodes_az1" {
+  count             = var.zookeeper_az1_count
+  availability_zone = data.aws_subnet.az1[0].availability_zone
+  size              = var.zookeeper_ebs_block_device[0].volume_size
+  type              = var.zookeeper_ebs_block_device[0].volume_type
+  tags              = module.zookeeper_label.tags
+}
+
+resource "aws_volume_attachment" "zookeeper_nodes_az1" {
+  count       = var.zookeeper_az1_count
+  device_name = var.zookeeper_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.zookeeper_nodes_az1[count.index].id
+  instance_id = module.zookeeper_nodes_az1.id[count.index]
 }
 
 module "zookeeper_nodes_az2" {
@@ -58,9 +72,23 @@ module "zookeeper_nodes_az2" {
   iam_instance_profile = var.zookeeper_instance_profile
   user_data            = data.template_cloudinit_config.zookeeper.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.zookeeper_ebs_optimized
   root_block_device = var.zookeeper_root_block_device
-  ebs_block_device  = var.zookeeper_ebs_block_device
+}
+
+resource "aws_ebs_volume" "zookeeper_nodes_az2" {
+  count             = var.zookeeper_az2_count
+  availability_zone = data.aws_subnet.az2[0].availability_zone
+  size              = var.zookeeper_ebs_block_device[0].volume_size
+  type              = var.zookeeper_ebs_block_device[0].volume_type
+  tags              = module.zookeeper_label.tags
+}
+
+resource "aws_volume_attachment" "zookeeper_nodes_az2" {
+  count       = var.zookeeper_az2_count
+  device_name = var.zookeeper_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.zookeeper_nodes_az2[count.index].id
+  instance_id = module.zookeeper_nodes_az2.id[count.index]
 }
 
 module "zookeeper_nodes_az3" {
@@ -82,7 +110,21 @@ module "zookeeper_nodes_az3" {
   iam_instance_profile = var.zookeeper_instance_profile
   user_data            = data.template_cloudinit_config.zookeeper.rendered
 
-  ebs_optimized     = true
+  ebs_optimized     = var.zookeeper_ebs_optimized
   root_block_device = var.zookeeper_root_block_device
-  ebs_block_device  = var.zookeeper_ebs_block_device
+}
+
+resource "aws_ebs_volume" "zookeeper_nodes_az3" {
+  count             = var.zookeeper_az3_count
+  availability_zone = data.aws_subnet.az3[0].availability_zone
+  size              = var.zookeeper_ebs_block_device[0].volume_size
+  type              = var.zookeeper_ebs_block_device[0].volume_type
+  tags              = module.zookeeper_label.tags
+}
+
+resource "aws_volume_attachment" "zookeeper_nodes_az3" {
+  count       = var.zookeeper_az3_count
+  device_name = var.zookeeper_ebs_block_device[0].device_name
+  volume_id   = aws_ebs_volume.zookeeper_nodes_az3[count.index].id
+  instance_id = module.zookeeper_nodes_az3.id[count.index]
 }
