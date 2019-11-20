@@ -63,9 +63,13 @@ variable "kafka_ebs_block_device" {
   }]
 }
 
+variable "kafka_ebs_optimized" {
+  default = true
+}
+
 variable "kafka_ebs_optimized_volume_path" {
   type    = string
-  default = ""
+  default = "/dev/nvme1n1"
 }
 
 variable "kafka_az1_count" {
@@ -116,9 +120,13 @@ variable "zookeeper_ebs_block_device" {
   }]
 }
 
+variable "zookeeper_ebs_optimized" {
+  default = true
+}
+
 variable "zookeeper_ebs_optimized_volume_path" {
   type    = string
-  default = ""
+  default = "/dev/nvme1n1"
 }
 
 variable "zookeeper_az1_count" {
