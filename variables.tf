@@ -63,6 +63,10 @@ variable "kafka_ebs_block_device" {
   }]
 }
 
+variable "kafka_ebs_default_iops" {
+  default = 300
+}
+
 variable "kafka_ebs_optimized" {
   default = true
 }
@@ -118,6 +122,10 @@ variable "zookeeper_ebs_block_device" {
     volume_size           = 30
     delete_on_termination = true
   }]
+}
+
+variable "zookeeper_ebs_default_iops" {
+  default = 200
 }
 
 variable "zookeeper_ebs_optimized" {

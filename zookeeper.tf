@@ -44,6 +44,7 @@ resource "aws_ebs_volume" "zookeeper_nodes_az1" {
   size              = var.zookeeper_ebs_block_device[0].volume_size
   type              = var.zookeeper_ebs_block_device[0].volume_type
   tags              = module.zookeeper_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.zookeeper_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "zookeeper_nodes_az1" {
@@ -82,6 +83,7 @@ resource "aws_ebs_volume" "zookeeper_nodes_az2" {
   size              = var.zookeeper_ebs_block_device[0].volume_size
   type              = var.zookeeper_ebs_block_device[0].volume_type
   tags              = module.zookeeper_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.zookeeper_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "zookeeper_nodes_az2" {
@@ -120,6 +122,7 @@ resource "aws_ebs_volume" "zookeeper_nodes_az3" {
   size              = var.zookeeper_ebs_block_device[0].volume_size
   type              = var.zookeeper_ebs_block_device[0].volume_type
   tags              = module.zookeeper_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.zookeeper_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "zookeeper_nodes_az3" {

@@ -44,6 +44,7 @@ resource "aws_ebs_volume" "kafka_nodes_az1" {
   size              = var.kafka_ebs_block_device[0].volume_size
   type              = var.kafka_ebs_block_device[0].volume_type
   tags              = module.kafka_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.kafka_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "kafka_nodes_az1" {
@@ -82,6 +83,7 @@ resource "aws_ebs_volume" "kafka_nodes_az2" {
   size              = var.kafka_ebs_block_device[0].volume_size
   type              = var.kafka_ebs_block_device[0].volume_type
   tags              = module.kafka_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.kafka_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "kafka_nodes_az2" {
@@ -120,6 +122,7 @@ resource "aws_ebs_volume" "kafka_nodes_az3" {
   size              = var.kafka_ebs_block_device[0].volume_size
   type              = var.kafka_ebs_block_device[0].volume_type
   tags              = module.kafka_label.tags
+  iops              = lookup(var.kafka_ebs_block_device[0], "iops", var.kafka_ebs_default_iops)
 }
 
 resource "aws_volume_attachment" "kafka_nodes_az3" {
