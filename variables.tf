@@ -99,8 +99,10 @@ variable "zookeeper_additional_user_data" {
 EOF
 }
 
+# For production check this docs
+# https://docs.confluent.io/current/zookeeper/deployment.html#memory
 variable "zookeeper_instance_type" {
-  default = "t3.large"
+  default = "t3.small"
 }
 
 variable "zookeeper_root_block_device" {
