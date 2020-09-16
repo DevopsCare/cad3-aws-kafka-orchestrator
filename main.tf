@@ -1,6 +1,5 @@
-
 /*
-*Copyright (c) 2020 Risk Focus Inc.
+* Copyright (c) 2020 Risk Focus Inc.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,7 +13,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 
 data "aws_subnet" "az1" {
   count = var.kafka_az1_count > 0 ? 1 : 0
