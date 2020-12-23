@@ -15,12 +15,12 @@
 */
 
 locals {
-  inventory_enabled = length(var.ansible_inventory_file_location) > 0 ?  1 : 0
+  inventory_enabled = length(var.ansible_inventory_file_location) > 0 ? 1 : 0
 }
 
 resource "local_file" "inventory" {
   count = local.inventory_enabled
-  content  = templatefile("${path.module}/templates/inventory.tpl", {
+  content = templatefile("${path.module}/templates/inventory.tpl", {
     list_kafka_nodes_az1 = join(
       "\n",
       formatlist(

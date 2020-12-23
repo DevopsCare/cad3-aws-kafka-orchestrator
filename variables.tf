@@ -66,16 +66,16 @@ variable "kafka_instance_type" {
 
 variable "kafka_root_block_device" {
   default = [{
-    volume_type           = "gp2"
-    volume_size           = 10
+    volume_type = "gp2"
+    volume_size = 10
   }]
 }
 
 variable "kafka_ebs_block_device" {
   default = [{
-    device_name           = "/dev/xvdb"
-    volume_type           = "gp2"
-    volume_size           = 30
+    device_name = "/dev/xvdb"
+    volume_type = "gp2"
+    volume_size = 30
   }]
 }
 

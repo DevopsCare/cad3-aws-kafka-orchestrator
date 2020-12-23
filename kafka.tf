@@ -19,7 +19,7 @@ data "template_cloudinit_config" "kafka" {
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
-    content      = templatefile("${path.module}/templates/init.tpl", {
+    content = templatefile("${path.module}/templates/init.tpl", {
       volume_path = var.kafka_ebs_optimized ? var.kafka_ebs_optimized_volume_path : var.kafka_ebs_block_device[0].device_name
       fs_path     = "/kafka"
     })
@@ -36,11 +36,11 @@ module "kafka_nodes_az1" {
   version        = "~> 2.0"
   instance_count = var.kafka_az1_count
 
-  name          = "${module.kafka_label.id}-az1"
-  ami           = var.ami_id
-  instance_type = var.kafka_instance_type
-  tags          = module.kafka_label.tags
-  use_num_suffix  = true
+  name           = "${module.kafka_label.id}-az1"
+  ami            = var.ami_id
+  instance_type  = var.kafka_instance_type
+  tags           = module.kafka_label.tags
+  use_num_suffix = true
 
   associate_public_ip_address = false
   subnet_id                   = var.az1_subnet_id
@@ -75,11 +75,11 @@ module "kafka_nodes_az2" {
   version        = "~> 2.0"
   instance_count = var.kafka_az2_count
 
-  name          = "${module.kafka_label.id}-az2"
-  ami           = var.ami_id
-  instance_type = var.kafka_instance_type
-  tags          = module.kafka_label.tags
-  use_num_suffix  = true
+  name           = "${module.kafka_label.id}-az2"
+  ami            = var.ami_id
+  instance_type  = var.kafka_instance_type
+  tags           = module.kafka_label.tags
+  use_num_suffix = true
 
   associate_public_ip_address = false
   subnet_id                   = var.az2_subnet_id
@@ -114,11 +114,11 @@ module "kafka_nodes_az3" {
   version        = "~> 2.0"
   instance_count = var.kafka_az3_count
 
-  name          = "${module.kafka_label.id}-az3"
-  ami           = var.ami_id
-  instance_type = var.kafka_instance_type
-  tags          = module.kafka_label.tags
-  use_num_suffix  = true
+  name           = "${module.kafka_label.id}-az3"
+  ami            = var.ami_id
+  instance_type  = var.kafka_instance_type
+  tags           = module.kafka_label.tags
+  use_num_suffix = true
 
   associate_public_ip_address = false
   subnet_id                   = var.az3_subnet_id
