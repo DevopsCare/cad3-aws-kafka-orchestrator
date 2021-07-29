@@ -23,7 +23,7 @@ bootcmd:
   - install -d -o root -m 0750 ${fs_path}
 
 mounts:
-  - [ "${volume_path}", "${fs_path}", "xfs", "defaults,noatime", "0", "2" ]
+  - [ "LABEL=data", "${fs_path}", "xfs", "defaults,noatime", "0", "2" ]
 
 runcmd:
   - amazon-linux-extras install epel
