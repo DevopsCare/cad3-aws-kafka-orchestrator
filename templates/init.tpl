@@ -18,16 +18,17 @@
 repo_update: true
 repo_upgrade: all
 
-bootcmd:
-  - test -z "$(blkid ${volume_path})" && mkfs -t xfs -L data ${volume_path}
-  - install -d -o root -m 0750 ${fs_path}
-
 mounts:
   - [ "LABEL=data", "${fs_path}", "xfs", "defaults,noatime", "0", "2" ]
 
 runcmd:
+  - export EXTRA_EBS=$( lsblk  -lno name,type,uuid | tac | awk '{if ($2=="part") {used_disk=1} else if ($2=="disk") {if (used_disk==1 || $3!="") {used_disk=0} else { print $1} } }' )
+  - mkfs -t xfs -L data /dev/$EXTRA_EBS
+  - install -d -o root -m 0750 ${fs_path}
+  - mount $(findfs LABEL=data) ${fs_path}
+
   - amazon-linux-extras install epel
   - yum install -y python2-pip python3-pip python3-netaddr
   - pip3 install 'ansible<2.11'
-  - yum install -y python3-urllib3 python-urllib3
+  - yum install -y python3-urllib3
   - pip uninstall -y urllib3
